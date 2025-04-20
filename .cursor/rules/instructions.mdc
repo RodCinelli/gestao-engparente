@@ -1,0 +1,36 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Pacotes já instalados do projeto
+
+## Backend (Django) - pasta backend
+
+    • pip install django - Base do framework para criar o projeto e gerenciar modelos, views e URLs.
+    • pip install djangorestframework - Para construir uma API RESTful robusta, permitindo que o frontend consuma os dados (funcionários, financeiro, etc.).
+    • pip install django-allauth - Para autenticação de usuários, essencial para uma aplicação de gestão empresarial onde o acesso pode ser restrito.
+    • pip install psycopg2-binary - Adaptador para conectar o Django ao PostgreSQL na Railway.
+    • pip install django-cors-headers - Para permitir que o frontend (hospedado na Vercel) acesse a API do backend (na Railway) sem problemas de CORS.
+    • pip install channels - Para adicionar suporte a WebSockets, necessário para atualizar os dashboards em tempo real.
+    • pip install channels_redis - Complemento do channels para usar Redis como camada de armazenamento em produção, garantindo escalabilidade no recurso de tempo real.
+    • pip install gunicorn - Servidor WSGI para rodar o Django em produção na Railway.
+    • pip install python-decouple - Para gerenciar variáveis de ambiente (como credenciais do banco de dados) de forma segura.
+    • pip install django-filter - Facilita a filtragem de dados na API (ex.: filtrar funcionários por setor ou status de pagamento).
+
+    Criei o backend com Django com django-admin startproject gestao_api (dentro da pasta backend)
+
+## Frontend (Next.js) - pasta frontend
+
+    • npm install -D tailwindcss@3.4.17 postcss autoprefixer - Para estilização utilitária. Após instalar, inicialize com npx tailwindcss init -p e configure o arquivo tailwind.config.js.
+    • npx shadcn@latest init - Inicializa o shadcn/ui, que fornece componentes estilizados com Tailwind. Adicione componentes específicos (ex.: botões, tabelas) com npx shadcn@latest add <componente>.
+    • npx shadcn@latest add toast
+    • npm install @tanstack/react-query - Para gerenciamento de dados assíncronos e caching, ideal para carregar dados da API de forma eficiente.
+    • npm install framer-motion - Para animações suaves, como transições nos dashboards ou ao adicionar um funcionário.
+    • npm install recharts - Para criar gráficos interativos nos dashboards (ex.: gastos por material ou salários pagos).
+    • npm install react-hook-form - Para gerenciar formulários (cadastro de funcionários e materiais) com validação simplificada.
+    • npm install zod - Para validação de esquemas nos formulários, integrando-se bem com react-hook-form.
+    • npm install react-use-websocket - Um hook simples para WebSockets em React.
+
+    Criei o frontend com npx create-next-app@latest gestao_web (dentro da pasta frontend)
