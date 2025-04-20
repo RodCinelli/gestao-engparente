@@ -1,17 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Navbar } from "@/components/navbar";
-import { Sidebar } from "@/components/sidebar";
 import { QueryProvider } from "@/components/query-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Gestão Empresarial",
-  description: "Sistema de gestão empresarial para controle de funcionários e finanças.",
+  title: "Gestão Eng. Parente",
+  description: "Sistema de gestão empresarial para Eng. Parente",
 };
 
 export default function RootLayout({
@@ -24,20 +22,14 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
           <QueryProvider>
-            <div className="flex h-screen">
-              <Sidebar />
-              <div className="flex flex-col flex-1 overflow-hidden">
-                <Navbar />
-                <main className="flex-1 overflow-y-auto p-4">
-                  {children}
-                </main>
-              </div>
-            </div>
+            <main className="min-h-screen flex flex-col">
+              {children}
+            </main>
             <Toaster />
           </QueryProvider>
         </ThemeProvider>

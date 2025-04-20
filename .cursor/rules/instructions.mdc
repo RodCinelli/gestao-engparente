@@ -3,9 +3,31 @@ description:
 globs: 
 alwaysApply: true
 ---
-# Pacotes já instalados do projeto
+# PACOTES INSTALADOS NO PROJETO #
 
-## IMPORTANTE - ESTOU UTILIZANDO WINDOWS POWERSHELL E O COMANDO PARA INSTALAR COMPONENTES SO SHADCN É "npx shadcn@latest add" ##
+## IMPORTANTE ##
+
+ESTOU UTILIZANDO WINDOWS POWERSHELL E O COMANDO PARA INSTALAR COMPONENTES DO SHADCN É "npx shadcn@latest add"
+
+A paleta de cores utilizada no projeto será: 
+
+/* Modo Claro */
+:root.light {
+  --primary: #009688;    /* Azul-esverdeado do logo */
+  --secondary: #F5F5F5;  /* Cinza claro */
+  --accent: #EDE4D0;     /* Bege claro do texto do logo */
+  --text: #333333;       /* Cinza escuro */
+  --background: #FFFFFF; /* Branco */
+}
+
+/* Modo Escuro */
+:root.dark {
+  --primary: #006D77;    /* Azul-esverdeado escuro */
+  --secondary: #2C2C2C;  /* Cinza escuro */
+  --accent: #EDE4D0;     /* Bege claro */
+  --text: #E0E0E0;       /* Cinza claro */
+  --background: #121212; /* Preto profundo */
+}
 
 ### Backend (Django) - pasta backend
 
