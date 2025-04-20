@@ -4,13 +4,13 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
-  BuildingIcon,
-  DashboardIcon,
-  PersonIcon,
-  ReceiptIcon,
-  SettingsIcon,
-  ShoppingCartIcon,
-} from "@radix-ui/react-icons"
+  LayoutDashboard,
+  Users,
+  Building,
+  ShoppingCart,
+  Receipt,
+  Settings,
+} from "lucide-react"
 
 interface SidebarItemProps {
   href: string
@@ -46,32 +46,32 @@ export function Sidebar() {
         <nav className="flex flex-col gap-1">
           <SidebarItem
             href="/"
-            icon={<DashboardIcon className="h-4 w-4" />}
+            icon={<LayoutDashboard className="h-4 w-4" />}
             title="Dashboard"
           />
           <SidebarItem
             href="/employees"
-            icon={<PersonIcon className="h-4 w-4" />}
+            icon={<Users className="h-4 w-4" />}
             title="Funcionários"
           />
           <SidebarItem
             href="/departments"
-            icon={<BuildingIcon className="h-4 w-4" />}
+            icon={<Building className="h-4 w-4" />}
             title="Departamentos"
           />
           <SidebarItem
             href="/materials"
-            icon={<ShoppingCartIcon className="h-4 w-4" />}
+            icon={<ShoppingCart className="h-4 w-4" />}
             title="Materiais"
           />
           <SidebarItem
             href="/expenses"
-            icon={<ReceiptIcon className="h-4 w-4" />}
+            icon={<Receipt className="h-4 w-4" />}
             title="Despesas"
           />
           <SidebarItem
             href="/settings"
-            icon={<SettingsIcon className="h-4 w-4" />}
+            icon={<Settings className="h-4 w-4" />}
             title="Configurações"
           />
         </nav>
