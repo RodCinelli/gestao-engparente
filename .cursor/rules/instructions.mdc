@@ -3,10 +3,11 @@ description:
 globs: 
 alwaysApply: true
 ---
-
 # Pacotes já instalados do projeto
 
-## Backend (Django) - pasta backend
+## IMPORTANTE - ESTOU UTILIZANDO WINDOWS POWERSHELL E O COMANDO PARA INSTALAR COMPONENTES SO SHADCN É "npx shadcn@latest add" ##
+
+### Backend (Django) - pasta backend
 
     • pip install django - Base do framework para criar o projeto e gerenciar modelos, views e URLs.
     • pip install djangorestframework - Para construir uma API RESTful robusta, permitindo que o frontend consuma os dados (funcionários, financeiro, etc.).
@@ -21,7 +22,7 @@ alwaysApply: true
 
     Criei o backend com Django com django-admin startproject gestao_api (dentro da pasta backend)
 
-## Frontend (Next.js) - pasta frontend
+### Frontend (Next.js) - pasta frontend
 
     • npm install -D tailwindcss@3.4.17 postcss autoprefixer - Para estilização utilitária. Após instalar, inicialize com npx tailwindcss init -p e configure o arquivo tailwind.config.js.
     • npx shadcn@latest init - Inicializa o shadcn/ui, que fornece componentes estilizados com Tailwind. Adicione componentes específicos (ex.: botões, tabelas) com npx shadcn@latest add <componente>.
