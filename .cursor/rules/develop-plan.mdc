@@ -3,12 +3,35 @@ description:
 globs: 
 alwaysApply: true
 ---
-# Plano de desenvolvimento
+# Plano de Desenvolvimento - Aplicação de Gestão Empresarial
 
-Vamos criar uma aplicação de gestão empresarial com 2 abas gerenciáveis por enquanto. Uma que permita cadastrar funcionários, mostrar em que setor da empresa eles atuam, controlar o dia do pagamento se o funcionário já recebeu ou não, quanto ele recebe, e outra aba de financeiro que permita cadastrar materiais e gastos com materiais, e quero que todas essas informações tenham um dashboard respectivo mostrando as informações em tempo real e de forma interativa. As tecnologias utilizadas serão Next.js, Tailwind.css, Django e PostgreSQL como banco de dados.
+## Visão Geral
+Aplicação com duas abas gerenciáveis:
+1. **Funcionários**: Cadastro, setor, status de pagamento, salário.
+2. **Financeiro**: Cadastro de materiais e gastos.
 
-O projeto será hospedado em dois locais diferentes de acordo com o frontend e o backend. Crie 2 pastas, sendo elasa pasta frontend que irá lidar com todo o frontend da aplicação e será hospedado na Vercel e a pasta backend que irá lidar com todo o backend da aplicação e será hospedado na Railway. Como baco de dados além do PostgreSQL local para testes, iremos utilizar o próprio Postgres da Railway para produção.  
+Cada aba terá um **dashboard interativo** com atualizações em tempo real.
 
-Considerações Adicionais:
+## Tecnologias
+- **Frontend**: Next.js, Tailwind.css
+- **Backend**: Django
+- **Banco de Dados**: PostgreSQL (local para testes, Railway para produção)
 
-Desejo que as Dashboards atualizem em tempo real, sem um refresh da página, por exemplo: Caso um funcionário seja adicionado a dashboard será atualizada em tempo real. 
+## Estrutura do Projeto
+- **Pasta `frontend`**: Frontend da aplicação, hospedado na **Vercel**.
+- **Pasta `backend`**: Backend da aplicação, hospedado na **Railway**.
+
+## Hospedagem
+- **Frontend**: Vercel
+- **Backend**: Railway
+- **Banco de Dados**:
+  - Testes: PostgreSQL local
+  - Produção: PostgreSQL na Railway
+
+## Requisitos Funcionais
+- **Dashboards**:
+  - Atualização em tempo real (sem refresh) para adição/edição de funcionários e materiais.
+  - Visualização interativa de dados (ex.: status de pagamento, gastos por material).
+## Considerações Adicionais
+- Uso de **WebSockets** para atualizações em tempo real.
+- Estrutura modular com pastas separadas para frontend e backend.
