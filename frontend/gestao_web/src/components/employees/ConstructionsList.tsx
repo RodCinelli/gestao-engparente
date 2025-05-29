@@ -117,7 +117,7 @@ export function ConstructionsList({
     return new Date(dateString).toLocaleDateString('pt-BR');
   };
 
-  const getStatusBadge = (isActive: boolean, endDate: string | null) => {
+  const getStatusBadge = (isActive: boolean, endDate: string | null | undefined) => {
     if (!isActive) {
       return <Badge variant="secondary">Inativa</Badge>;
     }

@@ -28,12 +28,12 @@ const formSchema = z.object({
   construction: z.string().min(2, 'Obra deve ter pelo menos 2 caracteres'),
   construction_sector: z.string().min(2, 'Setor deve ter pelo menos 2 caracteres'),
   salary: z.string().regex(/^\d+(\.\d{1,2})?$/, 'Salário inválido'),
-  payment_day: z.string().transform(Number).refine((val) => val >= 1 && val <= 31, {
-    message: 'Dia deve ser entre 1 e 31',
-  }),
-  meal_allowance: z.string().regex(/^\d+(\.\d{1,2})?$/, 'Valor inválido').default('0.00'),
-  transport_allowance: z.string().regex(/^\d+(\.\d{1,2})?$/, 'Valor inválido').default('0.00'),
+  payment_day: z.number().int().min(1, 'Dia deve ser pelo menos 1').max(31, 'Dia deve ser no máximo 31'),
+  meal_allowance: z.string().regex(/^\d+(\.\d{1,2})?$/, 'Valor inválido'),
+  transport_allowance: z.string().regex(/^\d+(\.\d{1,2})?$/, 'Valor inválido'),
 });
+
+type FormData = z.infer<typeof formSchema>;
 
 interface EmployeeFormProps {
   onSubmit: (data: EmployeeFormData) => Promise<void>;
@@ -46,7 +46,7 @@ export function EmployeeForm({
 }: EmployeeFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: initialData?.name || '',
@@ -58,16 +58,21 @@ export function EmployeeForm({
       construction: initialData?.construction || '',
       construction_sector: initialData?.construction_sector || '',
       salary: initialData?.salary || '',
-      payment_day: initialData?.payment_day?.toString() || '',
-      meal_allowance: initialData?.meal_allowance || '0.00',
-      transport_allowance: initialData?.transport_allowance || '0.00',
+      payment_day: initialData?.payment_day,
+      meal_allowance: initialData?.meal_allowance || '',
+      transport_allowance: initialData?.transport_allowance || '',
     },
   });
 
-  async function handleSubmit(values: z.infer<typeof formSchema>) {
+  async function handleSubmit(values: FormData) {
     try {
       setIsSubmitting(true);
-      await onSubmit(values as EmployeeFormData);
+      // Garantir que payment_day tenha um valor válido
+      const employeeData: EmployeeFormData = {
+        ...values,
+        payment_day: values.payment_day || 15, // usar 15 como padrão se não especificado
+      };
+      await onSubmit(employeeData);
       form.reset();
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -251,7 +256,25 @@ export function EmployeeForm({
               <FormItem>
                 <FormLabel>Dia do Pagamento</FormLabel>
                 <FormControl>
-                  <Input placeholder="15" type="number" min="1" max="31" {...field} />
+                  <Input 
+                    placeholder="15" 
+                    type="number" 
+                    min="1" 
+                    max="31" 
+                    {...field}
+                    value={field.value?.toString() || ''}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === '') {
+                        field.onChange(undefined as any); // temporariamente undefined durante edição
+                      } else {
+                        const numValue = parseInt(value);
+                        if (!isNaN(numValue)) {
+                          field.onChange(numValue);
+                        }
+                      }
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -265,7 +288,7 @@ export function EmployeeForm({
               <FormItem>
                 <FormLabel>Vale Refeição (R$)</FormLabel>
                 <FormControl>
-                  <Input placeholder="0.00" {...field} />
+                  <Input placeholder="Ex: 600.00" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -279,7 +302,7 @@ export function EmployeeForm({
               <FormItem>
                 <FormLabel>Vale Transporte (R$)</FormLabel>
                 <FormControl>
-                  <Input placeholder="0.00" {...field} />
+                  <Input placeholder="Ex: 200.00" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
