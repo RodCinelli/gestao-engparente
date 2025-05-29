@@ -67,6 +67,7 @@ export function ConstructionsList({
       await onConstructionDelete(constructionId);
     } catch (error) {
       console.error('Error deleting construction:', error);
+      // A página principal já cuida de mostrar toasts de erro
     } finally {
       setDeletingId(null);
     }

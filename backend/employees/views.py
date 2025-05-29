@@ -19,6 +19,7 @@ from .serializers import (
     ConstructionSectorSerializer,
     DashboardSerializer,
 )
+from rest_framework.exceptions import ValidationError
 
 
 class ConstructionViewSet(viewsets.ModelViewSet):
@@ -32,6 +33,19 @@ class ConstructionViewSet(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         instance = serializer.save()
         self._notify_update("construction_updated")
+
+    def perform_destroy(self, instance):
+        # Verificar se há funcionários vinculados a esta obra
+        employees_count = Employee.objects.filter(construction=instance).count()
+
+        if employees_count > 0:
+            raise ValidationError(
+                f"Não é possível excluir esta obra pois há {employees_count} funcionário(s) vinculado(s) a ela."
+            )
+
+        # Se não há funcionários, prosseguir com a exclusão
+        instance.delete()
+        self._notify_update("construction_deleted")
 
     def _notify_update(self, action):
         channel_layer = get_channel_layer()

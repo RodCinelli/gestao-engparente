@@ -164,43 +164,34 @@ export default function EmployeesPage() {
     try {
       await constructionsAPI.delete(constructionId);
       
-      // Aguardar um pouco para o WebSocket processar a atualização
-      setTimeout(() => {
-        // Verificar se a construção ainda existe antes de mostrar sucesso
-        const stillExists = constructions.find(c => c.id === constructionId);
-        if (!stillExists) {
-          toast({
-            title: 'Sucesso',
-            description: 'Obra removida com sucesso',
-          });
-        }
-      }, 1000);
+      toast({
+        title: 'Sucesso',
+        description: 'Obra removida com sucesso',
+      });
       
       // Reload data after deletion
       await loadInitialData();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error deleting construction:', error);
       
-      // Aguardar um pouco antes de mostrar erro para verificar se a operação funcionou
-      setTimeout(async () => {
-        await loadInitialData();
-        const stillExists = constructions.find(c => c.id === constructionId);
-        
-        if (stillExists) {
-          // Se ainda existe, mostrar erro
-          toast({
-            title: 'Erro',
-            description: 'Falha ao remover obra. Verifique se não há funcionários vinculados a esta obra.',
-            variant: 'destructive',
-          });
-        } else {
-          // Se não existe mais, a operação funcionou
-          toast({
-            title: 'Sucesso',
-            description: 'Obra removida com sucesso',
-          });
+      // Verificar se é um erro de validação específico do backend
+      let errorMessage = 'Falha ao remover obra. Verifique se não há funcionários vinculados a esta obra.';
+      
+      // Tentar extrair mensagem específica do erro do backend
+      if (error?.message) {
+        if (error.message.includes('funcionário')) {
+          errorMessage = error.message;
+        } else if (error.message.includes('400')) {
+          // Erro 400 pode indicar ValidationError
+          errorMessage = 'Não é possível excluir esta obra pois há funcionários vinculados a ela.';
         }
-      }, 1500);
+      }
+      
+      toast({
+        title: 'Erro',
+        description: errorMessage,
+        variant: 'destructive',
+      });
     }
   }
 
@@ -288,43 +279,21 @@ export default function EmployeesPage() {
               try {
                 await employeesAPI.delete(employeeId);
                 
-                // Aguardar um pouco para o WebSocket processar a atualização
-                setTimeout(() => {
-                  // Verificar se o funcionário ainda existe antes de mostrar sucesso
-                  const stillExists = employees.find(e => e.id === employeeId);
-                  if (!stillExists) {
-                    toast({
-                      title: 'Sucesso',
-                      description: 'Funcionário removido com sucesso',
-                    });
-                  }
-                }, 1000);
+                toast({
+                  title: 'Sucesso',
+                  description: 'Funcionário removido com sucesso',
+                });
                 
                 // Reload data after deletion
                 await loadInitialData();
               } catch (error) {
                 console.error('Error deleting employee:', error);
                 
-                // Aguardar um pouco antes de mostrar erro para verificar se a operação funcionou
-                setTimeout(async () => {
-                  await loadInitialData();
-                  const stillExists = employees.find(e => e.id === employeeId);
-                  
-                  if (stillExists) {
-                    // Se ainda existe, mostrar erro
-                    toast({
-                      title: 'Erro',
-                      description: 'Falha ao remover funcionário',
-                      variant: 'destructive',
-                    });
-                  } else {
-                    // Se não existe mais, a operação funcionou
-                    toast({
-                      title: 'Sucesso',
-                      description: 'Funcionário removido com sucesso',
-                    });
-                  }
-                }, 1500);
+                toast({
+                  title: 'Erro',
+                  description: 'Falha ao remover funcionário',
+                  variant: 'destructive',
+                });
               }
             }}
           />
