@@ -8,7 +8,7 @@ from django.db.models import Sum, Count, Q
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from decimal import Decimal
-from typing import Any
+from typing import Dict, Any, cast
 from .models import Employee, Department, Construction, ConstructionSector
 from .serializers import (
     EmployeeSerializer,
@@ -177,8 +177,17 @@ class EmployeeViewSet(viewsets.ModelViewSet):
         )
 
         if serializer.is_valid():
-            payment_type = serializer.validated_data["payment_type"]
-            amount = serializer.validated_data.get("amount")
+            # Verificação segura dos dados validados
+            validated_data = cast(Dict[str, Any], serializer.validated_data)
+
+            payment_type = validated_data.get("payment_type")
+            if not payment_type:
+                return Response(
+                    {"error": "Tipo de pagamento é obrigatório"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            amount = validated_data.get("amount")
 
             if payment_type == "salary":
                 employee.mark_salary_as_paid(amount)
