@@ -20,7 +20,26 @@ interface SidebarItemProps {
 
 function SidebarItem({ href, icon, title }: SidebarItemProps) {
   const pathname = usePathname()
-  const isActive = pathname === href || pathname.startsWith(`${href}/`)
+  
+  // Lógica mais específica para detectar rota ativa
+  const isActive = (() => {
+    // Para a rota exata, usar comparação direta
+    if (pathname === href) {
+      return true
+    }
+    
+    // Para sub-rotas, verificar se começa com o href mas não para rotas conflitantes
+    if (href !== '/dashboard' && pathname.startsWith(`${href}/`)) {
+      return true
+    }
+    
+    // Para dashboard, só ativar se for exatamente /dashboard
+    if (href === '/dashboard') {
+      return pathname === '/dashboard'
+    }
+    
+    return false
+  })()
 
   return (
     <Link
@@ -45,7 +64,7 @@ export function Sidebar() {
         </div>
         <nav className="flex flex-col gap-1">
           <SidebarItem
-            href="/"
+            href="/dashboard"
             icon={<LayoutDashboard className="h-4 w-4" />}
             title="Dashboard"
           />

@@ -338,9 +338,9 @@ export default function LoginPage() {
             zIndex: note.isSettled ? note.zIndex : 1
           }}
         >
-          <img 
+          <Image 
             src={moneyNoteTypes[note.type]} 
-            alt="Nota" 
+            alt="Nota"
             width={300} 
             height={150}
             className="w-auto h-auto max-w-[200px]"
@@ -371,8 +371,8 @@ export default function LoginPage() {
               <Image
                 src="/logo_engparente.png"
                 alt="Eng. Parente Logo"
-                layout="fill"
-                objectFit="contain"
+                fill
+                style={{ objectFit: 'contain' }}
                 className="drop-shadow-lg"
               />
             </motion.div>

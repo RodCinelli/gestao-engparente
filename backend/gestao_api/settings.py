@@ -36,6 +36,7 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="*", cast=Csv())
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",  # Deve vir primeiro para WebSockets funcionarem
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -154,7 +155,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Django REST Framework settings
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.AllowAny",  # Temporariamente para debug
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
