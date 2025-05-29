@@ -115,7 +115,7 @@ if DEBUG:
             "ENGINE": "django.db.backends.postgresql",
             "NAME": "gestao_db",
             "USER": "postgres",
-            "PASSWORD": "rodcineli18",
+            "PASSWORD": "postgres",
             "HOST": "localhost",
             "PORT": "5432",
         }
