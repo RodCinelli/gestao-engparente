@@ -88,6 +88,13 @@ export function EmployeesList({
     return phone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
   };
 
+  const calculateTotalCompensation = (employee: Employee) => {
+    const salary = parseFloat(employee.salary) || 0;
+    const mealAllowance = parseFloat(employee.meal_allowance) || 0;
+    const transportAllowance = parseFloat(employee.transport_allowance) || 0;
+    return salary + mealAllowance + transportAllowance;
+  };
+
   const getPaymentStatusBadge = (status: 'pending' | 'paid' | 'partial') => {
     const variants = {
       pending: 'destructive',
@@ -209,7 +216,7 @@ export function EmployeesList({
                   <TableHead>Contato</TableHead>
                   <TableHead>Cargo</TableHead>
                   <TableHead>Obra</TableHead>
-                  <TableHead>Salário</TableHead>
+                  <TableHead>Remuneração</TableHead>
                   <TableHead>Status Pagamento</TableHead>
                   <TableHead>Ações</TableHead>
                 </TableRow>
@@ -249,7 +256,28 @@ export function EmployeesList({
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell>{formatCurrency(employee.salary)}</TableCell>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-muted-foreground">Salário:</span>
+                          <span className="font-medium">{formatCurrency(employee.salary)}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-muted-foreground">V.R.:</span>
+                          <span className="text-sm">{formatCurrency(employee.meal_allowance || '0')}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-muted-foreground">V.T.:</span>
+                          <span className="text-sm">{formatCurrency(employee.transport_allowance || '0')}</span>
+                        </div>
+                        <div className="flex justify-between items-center border-t pt-1">
+                          <span className="text-xs font-medium text-primary">Total:</span>
+                          <span className="font-bold text-primary">
+                            {formatCurrency(calculateTotalCompensation(employee))}
+                          </span>
+                        </div>
+                      </div>
+                    </TableCell>
                     <TableCell>
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
