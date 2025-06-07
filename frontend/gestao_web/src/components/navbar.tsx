@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Menu, Bell, Moon, Sun, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -31,6 +32,9 @@ export function Navbar() {
   const toggleSidebar = () => {
     // Implementar toggle do sidebar para mobile
     document.documentElement.classList.toggle("sidebar-open")
+    
+    // Disparar evento personalizado para o sidebar
+    window.dispatchEvent(new CustomEvent('toggle-sidebar'))
   }
 
   return (
@@ -45,8 +49,13 @@ export function Navbar() {
           <Menu className="h-5 w-5" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
-        <Link href="/dashboard" className="text-lg font-semibold text-primary">
-          ENG. PARENTE
+      </div>
+      
+      <div className="absolute left-1/2 transform -translate-x-1/2">
+        <Link href="/dashboard" className="flex items-center hover:opacity-80 transition-opacity">
+          <span className="text-sm font-medium text-muted-foreground">
+            Sistema de Gestão <span className="text-primary font-semibold">EngParente</span>
+          </span>
         </Link>
       </div>
       
